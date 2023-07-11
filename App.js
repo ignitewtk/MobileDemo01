@@ -1,10 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Image } from 'react-native';
+import React, { useState } from 'react'
+import SessionList from './Components/SessionList';
 
 export default function App() {
+  const [username, setUsername] = useState('');
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Image style={styles.logo} source={require('./assets/favicon.png')} />
+      <TextInput style={styles.textInput} placeholder='Username'/>
+
+      <TextInput style={styles.textInput} placeholder='Password'/>
+      <Button title="Submit">  </Button>
+      <SessionList />
       <StatusBar style="auto" />
     </View>
   );
@@ -17,4 +26,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
+  textInput: {
+    margin: 10,
+    width: 250,
+    height: 40,
+    borderWidth: 1, 
+    borderColor: "#f0eded",
+  },
+  
+  logo: {
+    margin: 10
+  }
 });
