@@ -1,13 +1,18 @@
-import { StyleSheet, Text, View, Button, Image, ScrollView } from 'react-native';
+import { Alert, StyleSheet, Text, View, Button, Image, ScrollView } from 'react-native';
 import React, { useState } from 'react'
 
 
 function SessionItem(props) {
+
+    _delete = () => {
+        Alert.alert("Do you want to delete this?")
+    }
+
     return (
         <View style={styles.container}>
             <Image source={require('../assets/icon.png')} style={styles.icon} />
             <Text style={styles.name}> {props.username} </Text>
-            <Button title="Delete" color="red"/>
+            <Button title="Delete" color="red" onPress={_delete} />
         </View>
     )
 }
@@ -25,7 +30,6 @@ export default function SessionList() {
                 <SessionItem key={index} username={item}/>
             ))
         }
-      
     </ScrollView>
   );
 }

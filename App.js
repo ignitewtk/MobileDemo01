@@ -1,41 +1,49 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button, Image } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useState } from 'react'
+
+import Authentication from './Views/Authentication';
 import SessionList from './Components/SessionList';
 
-export default function App() {
-  const [username, setUsername] = useState('');
+const Stack = createNativeStackNavigator();
 
+const HomeScreen = ({navigation}) => {
   return (
-    <View style={styles.container}>
-      <Image style={styles.logo} source={require('./assets/favicon.png')} />
-      <TextInput style={styles.textInput} placeholder='Username'/>
+    <View>
+      <Text> Home </Text>
+      <Button title="Next" 
+        onPress={() => 
+          navigation.navigate('Profile', {name:'Admin'})}/>
+    </View>    
+  )
+}
 
-      <TextInput style={styles.textInput} placeholder='Password'/>
-      <Button title="Submit">  </Button>
-      <SessionList />
-      <StatusBar style="auto" />
-    </View>
+const ProfileScreen = ({navigation, route}) => {
+  return <Text> This is {route.params.name}'s profile'. </Text>
+}
+
+export default function App() {
+  
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen 
+          name="Home"
+          component={Authentication} />
+        <Stack.Screen 
+          name="SessionList"
+          component={SessionList} />
+        <Stack.Screen
+          name="Welcome"
+          component={HomeScreen}
+          options={{title:"Welcome"}} />
+        <Stack.Screen 
+          name="Profile"
+          component={ProfileScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  textInput: {
-    margin: 10,
-    width: 250,
-    height: 40,
-    borderWidth: 1, 
-    borderColor: "#f0eded",
-  },
-  
-  logo: {
-    margin: 10
-  }
-});
